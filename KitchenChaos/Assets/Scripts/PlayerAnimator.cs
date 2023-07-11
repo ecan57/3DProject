@@ -15,7 +15,7 @@ public class PlayerAnimator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(player.IsWalking());
+        //Debug.Log(player.IsWalking());
         IsWalk();
     }
     void IsWalk()
