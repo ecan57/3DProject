@@ -33,6 +33,7 @@ Transform:
   m_Children:
   - {fileID: 3434112281004976237}
   - {fileID: 3597136067327297852}
+  - {fileID: 3448872221864631402}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -69,6 +70,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba30e8a8ac9fbe649a78a5b863a0a815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tomatoPrefab: {fileID: 3555427286624592664, guid: ccce8bf79a3c94d4abd445d198dcc094,
+    type: 3}
+  counterTopPoint: {fileID: 3448872221864631402}
 --- !u!114 &1667928188155796428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83,6 +87,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clearCounter: {fileID: 6249705535387472536}
   visualGameObject: {fileID: 3597136067327297853}
+--- !u!1 &9031925129783246049
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3448872221864631402}
+  m_Layer: 6
+  m_Name: CounterTopPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3448872221864631402
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9031925129783246049}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.25, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2896071770857431945}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1034256944252546455
 PrefabInstance:
   m_ObjectHideFlags: 0
