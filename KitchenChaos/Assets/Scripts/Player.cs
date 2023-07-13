@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IKitchenObjectParent
 { //ctrl+r+r kelimeyi seçince scripteki hepsini deðiþtiriyor.
     public static Player Instance { get; private set; } // dýþarýdan instance olarak çekip içinden verdiðimiz verileri dýþardan deðiþtirilemez olduðu söylüyor. Get ile dýþarýdan çekebiliyoruz ama set private olduðu için deðiþtirmeye izin vermiyor
 
     public event EventHandler<OnSelectedCounterChangeEventArg> OnSelectedCounterChangeEvent;
     public class OnSelectedCounterChangeEventArg : EventArgs
     {
-        public ClearCounter selectedCounter;
+        public BaseCounter selectedCounter;
     }
 
     [SerializeField] float moveSpeed;
@@ -21,11 +21,15 @@ public class Player : MonoBehaviour
 
     private Vector3 lastInteractions;
 
-    private ClearCounter selectedCounter;
+    private BaseCounter selectedCounter;
+
+    [SerializeField] LayerMask countersLayerMask;
 
     [SerializeField] GameInput gameInput;
 
-    [SerializeField] LayerMask countersLayerMask;
+    [SerializeField] Transform kitchenObjectHoldPoint;
+
+    [SerializeField] KitchenObject kitchenObject;
 
     private void Awake()
     {
@@ -35,6 +39,7 @@ public class Player : MonoBehaviour
         }
         Instance = this;
     }
+
     void Start()
     {
         gameInput.OnInteractAction += GameInput_OnInteractAction;
@@ -51,35 +56,8 @@ public class Player : MonoBehaviour
     {
         if(selectedCounter != null)
         {
-            selectedCounter.Interact();
+            selectedCounter.Interact(this);
         }
-
-        //Vector2 inputVector = gameInput.GetMovementVectorNormalize();
-
-        //Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
-
-        //if (moveDir != Vector3.zero)
-        //{
-        //    lastInteractions = moveDir;
-        //}
-
-        //float interactDistance = 2f;
-
-        ///*if(Physics.Raycast(transform.position, moveDir, out RaycastHit raycastHit, interactDistance))*/ //çýkan sonucun çýktýsýný alýyoruz raycasta çarpanýn transformu
-        //if (Physics.Raycast(transform.position, lastInteractions, out RaycastHit raycastHit, interactDistance, countersLayerMask)) //movedir yerine lastinteraction yazptýk
-        //{
-        //    if (raycastHit.transform.TryGetComponent(out ClearCounter clearCounter))
-        //    {
-        //        clearCounter.Interact();
-        //        //Debug.Log("Interact");
-        //    }
-        //    //Debug.Log(raycastHit.transform); //bu ilk yazdýðýmýzdý
-        //    //raycast in eski kullanýmý çalýþma sayfasýnda yer alýyor
-        //}
-        //else
-        //{
-        //    Debug.Log("-"); //Cast ler çok önemli
-        //}
     }
 
     private void HandleMovement()
@@ -122,7 +100,6 @@ public class Player : MonoBehaviour
             isWalking = moveDir != Vector3.zero;
             transform.forward = Vector3.Slerp(transform.forward, moveDir, rotateSpeed * Time.deltaTime);//scriptin baðlý olduðu objenin transformu //slerp -- smoot olarak
         }
-        //transform.position += moveDir * moveSpeed * Time.deltaTime; //hemen üstteki ife yazdýðýmýz için gerek kalmadý
     }
 
     private void HandleInteractions()
@@ -141,44 +118,25 @@ public class Player : MonoBehaviour
         /*if(Physics.Raycast(transform.position, moveDir, out RaycastHit raycastHit, interactDistance))*/ //çýkan sonucun çýktýsýný alýyoruz raycasta çarpanýn transformu
         if (Physics.Raycast(transform.position, lastInteractions, out RaycastHit raycastHit, interactDistance, countersLayerMask)) //movedir yerine lastinteraction yazptýk
         {
-            if(raycastHit.transform.TryGetComponent(out ClearCounter clearCounter))
+            if(raycastHit.transform.TryGetComponent(out BaseCounter baseCounter))
             {
-                if(clearCounter != selectedCounter)
+                if(baseCounter != selectedCounter)
                 {
-                    SetSelectedCounter(clearCounter);
-                    //selectedCounter = clearCounter;
-                    //OnSelectedCounterChangeEvent?.Invoke(this, new OnSelectedCounterChangeEventArg
-                    //{
-                    //    selectedCounter = selectedCounter
-                    //});
+                    SetSelectedCounter(baseCounter);
                 }
-                //Debug.Log("Interact");
             }
             else
             {
                 SetSelectedCounter(null);
-                //selectedCounter = null;
-                //OnSelectedCounterChangeEvent?.Invoke(this, new OnSelectedCounterChangeEventArg
-                //{
-                //    selectedCounter = selectedCounter
-                //});
             }
-            //Debug.Log(raycastHit.transform); //bu ilk yazdýðýmýzdý
-            //raycast in eski kullanýmý çalýþma sayfasýnda yer alýyor
         }
         else
         {
             SetSelectedCounter(null);
-            //selectedCounter = null;
-            //OnSelectedCounterChangeEvent?.Invoke(this, new OnSelectedCounterChangeEventArg
-            //{
-            //    selectedCounter = selectedCounter
-            //});
-            //Debug.Log("-"); //Cast ler çok önemli
         }
     }
 
-    private void SetSelectedCounter(ClearCounter selectedCounter)
+    private void SetSelectedCounter(BaseCounter selectedCounter)
     {
         this.selectedCounter = selectedCounter;
         OnSelectedCounterChangeEvent?.Invoke(this, new OnSelectedCounterChangeEventArg
@@ -192,4 +150,28 @@ public class Player : MonoBehaviour
         return isWalking;
     }
 
+    public Transform GetKtchenObjectFollowTransform()
+    {
+        return kitchenObjectHoldPoint;
+    }
+
+    public void SetKitchenObject(KitchenObject kitchenObject)
+    {
+        this.kitchenObject = kitchenObject;
+    }
+
+    public KitchenObject GetKitchenObject()
+    {
+        return kitchenObject;
+    }
+
+    public void ClearKitchenObject()
+    {
+        kitchenObject = null;
+    }
+
+    public bool HasKitchenObject()
+    {
+        return kitchenObject != null;
+    }
 }
