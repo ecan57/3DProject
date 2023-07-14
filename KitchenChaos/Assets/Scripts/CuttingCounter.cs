@@ -2,15 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ClearCounter : BaseCounter
+public class CuttingCounter : BaseCounter
 {
-    [SerializeField] KitchenObjectSO kitchenObjectSO;
-   
     public override void Interact(Player player)
     {
-        if(!HasKitchenObject())
+        if (!HasKitchenObject())
         {
-            if(player.HasKitchenObject()) //elinde obje varsa
+            if (player.HasKitchenObject()) //elinde obje varsa
             {
                 player.GetKitchenObject().SetKitchenObjectParent(this);//playerin eline aldýðý(GetKitchenObject) kitchenobjeyi etkileþime girdiði countera býrak(SetKitchenObjectParent(this))
             }
@@ -21,14 +19,22 @@ public class ClearCounter : BaseCounter
         }
         else
         {
-            if(player.HasKitchenObject())
+            if (player.HasKitchenObject())
             {
 
             }
-            else 
+            else
             {
                 GetKitchenObject().SetKitchenObjectParent(player); //elinde yoksa eline al.
             }
+        }
+    }
+
+    public override void InteractAlternate(Player player)
+    {
+        if(!HasKitchenObject())
+        {
+
         }
     }
 }
