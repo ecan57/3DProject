@@ -5,12 +5,16 @@ using UnityEngine;
 public class ContainerCounterVisual : MonoBehaviour
 {
     private const string OPEN_CLOSE = "OpenClose";
+
     [SerializeField] ContainerCounter containerCounter;
+
     Animator anim;
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
     }
+
     void Start()
     {
         containerCounter.OnPlayerGrabbedObject += ContainerCounter_OnPlayerGrabbedObject;
@@ -19,11 +23,5 @@ public class ContainerCounterVisual : MonoBehaviour
     private void ContainerCounter_OnPlayerGrabbedObject(object sender, System.EventArgs e)
     {
         anim.SetTrigger(OPEN_CLOSE);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
