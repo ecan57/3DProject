@@ -290,6 +290,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1667928188155796428, guid: e12f53e89edc02b4b8723362640341ca,
         type: 3}
+      propertyPath: baseCounter
+      value: 
+      objectReference: {fileID: 2090700265978040385}
+    - target: {fileID: 1667928188155796428, guid: e12f53e89edc02b4b8723362640341ca,
+        type: 3}
       propertyPath: visualGameObjectArray.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -373,8 +378,38 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 7829652996669320149}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2671527853890805799, guid: e12f53e89edc02b4b8723362640341ca,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2090700265978040385}
   m_SourcePrefab: {fileID: 100100000, guid: e12f53e89edc02b4b8723362640341ca, type: 3}
+--- !u!1 &4685815447882764523 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2671527853890805799, guid: e12f53e89edc02b4b8723362640341ca,
+    type: 3}
+  m_PrefabInstance: {fileID: 7211512319290781900}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2090700265978040385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4685815447882764523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c80c93270800b5f49b8178b678192bbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  counterTopPoint: {fileID: 5460802823704423590}
+  kitchenObject: {fileID: 0}
+--- !u!4 &5460802823704423590 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3448872221864631402, guid: e12f53e89edc02b4b8723362640341ca,
+    type: 3}
+  m_PrefabInstance: {fileID: 7211512319290781900}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5486679371073737541 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2896071770857431945, guid: e12f53e89edc02b4b8723362640341ca,
