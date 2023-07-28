@@ -7,6 +7,8 @@ public class DeliveryManager : MonoBehaviour
 {
     public event EventHandler OnRecipeSpawned;
     public event EventHandler OnRecipeComplated;
+    public event EventHandler OnRecipeSuccess;
+    public event EventHandler OnRecipeFailed;
     public static DeliveryManager Instance { get; private set; } //get: dýþarýdan verileri okuyayým, private set: düzenleyememyiyim
     [SerializeField] private RecipeListSO recipeListSO;
 
@@ -74,10 +76,12 @@ public class DeliveryManager : MonoBehaviour
                     //Debug.Log("Player Delivered the correct recipe.");
                     waitingRecipeSOList.RemoveAt(i);
                     OnRecipeComplated?.Invoke(this, EventArgs.Empty);
+                    OnRecipeSuccess?.Invoke(this, EventArgs.Empty);
                     return;
                 }
             }
         }
+        OnRecipeFailed?.Invoke(this, EventArgs.Empty);
         Debug.Log("Player did not delivered the correct recipe!");
     }
     public List<RecipeSO> GetWaitingRecipeSOList()

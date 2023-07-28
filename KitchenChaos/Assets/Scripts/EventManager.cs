@@ -5,5 +5,8 @@ using UnityEngine;
 
 public class EventManager : MonoBehaviour
 {
-    public static Action OnInteractAction;
+    #region Sound
+    public static Action OnRecipeSuccess;
+    public static Func<int> OnRecipeFailed;
+    #endregion
 }

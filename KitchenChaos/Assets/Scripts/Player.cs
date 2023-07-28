@@ -14,6 +14,8 @@ public class Player : MonoBehaviour, IKitchenObjectParent
         public BaseCounter selectedCounter;
     }
 
+    public event EventHandler OnPickedSomething;
+
     [SerializeField] float moveSpeed;
     [SerializeField] float rotateSpeed;
 
@@ -47,8 +49,15 @@ public class Player : MonoBehaviour, IKitchenObjectParent
         //event manager oluþturup içine üyeler eklersek oluþan bleþenleri de public sttic yaparsak tanýmlamalara da gerek kalmaz
     }
 
+    void Update()
+    {
+        HandleMovement();
+        HandleInteractions();
+    }
+
     private void GameInput_OnInteractAlternateAction(object sender, EventArgs e)
     {
+        if (!KitchenGameManager.Instance.IsGamePlaying()) return;
         if (selectedCounter != null)
         {
             selectedCounter.InteractAlternate(this);
@@ -56,15 +65,10 @@ public class Player : MonoBehaviour, IKitchenObjectParent
         }
     }
 
-    void Update()
-    {
-        HandleMovement();
-        HandleInteractions();
-    }
-
     private void GameInput_OnInteractAction(object sender, EventArgs e) //object sender kendsini göndereceðini ifade ediyor çümkü ilk yerde this demiþtik
     {
-        if(selectedCounter != null)
+        if (!KitchenGameManager.Instance.IsGamePlaying()) return;
+        if (selectedCounter != null)
         {
             selectedCounter.Interact(this);
             transform.LookAt(selectedCounter.transform); //selected olduðu countera gelince yönü nerede olursa olsun player o tarafa döner
@@ -170,6 +174,10 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     public void SetKitchenObject(KitchenObject kitchenObject)
     {
         this.kitchenObject = kitchenObject;
+        if(kitchenObject != null)
+        {
+            OnPickedSomething?.Invoke(this, EventArgs.Empty);
+        }
     }
 
     public KitchenObject GetKitchenObject()
